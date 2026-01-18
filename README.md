@@ -50,6 +50,416 @@ async def root():
 
 ---
 
+## 📋 Complete Import Reference
+
+All available imports organized by category:
+
+### Core Middlewares
+
+```python
+from FastMiddleware import (
+    FastMVCMiddleware,       # Base middleware class
+    CORSMiddleware,          # Cross-Origin Resource Sharing
+    LoggingMiddleware,       # Structured request/response logging
+    TimingMiddleware,        # Response timing headers
+    RequestIDMiddleware,     # Unique request ID generation
+)
+```
+
+### Security Middlewares
+
+```python
+from FastMiddleware import (
+    # Security Headers
+    SecurityHeadersMiddleware, SecurityHeadersConfig,
+    TrustedHostMiddleware,
+    ReferrerPolicyMiddleware, ReferrerPolicyConfig,
+    PermissionsPolicyMiddleware, PermissionsPolicyConfig,
+    CSPReportMiddleware, CSPReportConfig,
+    
+    # CSRF & Origin
+    CSRFMiddleware, CSRFConfig,
+    OriginMiddleware, OriginConfig,
+    
+    # Network Security
+    HTTPSRedirectMiddleware, HTTPSRedirectConfig,
+    IPFilterMiddleware, IPFilterConfig,
+    XFFTrustMiddleware, XFFTrustConfig,
+    RealIPMiddleware, RealIPConfig, get_real_ip,
+    
+    # Webhook & Signing
+    WebhookMiddleware, WebhookConfig,
+    RequestSigningMiddleware, RequestSigningConfig,
+    ReplayPreventionMiddleware, ReplayPreventionConfig,
+    ResponseSignatureMiddleware, ResponseSignatureConfig,
+    
+    # Protection
+    HoneypotMiddleware, HoneypotConfig,
+    SanitizationMiddleware, SanitizationConfig,
+)
+```
+
+### Rate Limiting & Protection
+
+```python
+from FastMiddleware import (
+    RateLimitMiddleware, RateLimitConfig, RateLimitStore, InMemoryRateLimitStore,
+    QuotaMiddleware, QuotaConfig,
+    LoadSheddingMiddleware, LoadSheddingConfig,
+    BulkheadMiddleware, BulkheadConfig,
+    RequestDedupMiddleware, RequestDedupConfig,
+    RequestCoalescingMiddleware, CoalescingConfig,
+)
+```
+
+### Authentication & Authorization
+
+```python
+from FastMiddleware import (
+    # JWT & API Key
+    AuthenticationMiddleware, AuthConfig, AuthBackend,
+    JWTAuthBackend, APIKeyAuthBackend,
+    
+    # Basic & Bearer
+    BasicAuthMiddleware, BasicAuthConfig,
+    BearerAuthMiddleware, BearerAuthConfig,
+    
+    # Scopes & Routes
+    ScopeMiddleware, ScopeConfig,
+    RouteAuthMiddleware, RouteAuthConfig, RouteAuth,
+)
+```
+
+### Session & Context
+
+```python
+from FastMiddleware import (
+    # Session
+    SessionMiddleware, SessionConfig, SessionStore, InMemorySessionStore, Session,
+    
+    # Request Context
+    RequestContextMiddleware, get_request_id, get_request_context,
+    CorrelationMiddleware, CorrelationConfig, get_correlation_id,
+    ContextMiddleware, ContextConfig, get_context, get_context_value, set_context_value,
+    RequestIDPropagationMiddleware, RequestIDPropagationConfig, get_request_ids, get_trace_header,
+    
+    # Multi-tenancy
+    TenantMiddleware, TenantConfig, get_tenant, get_tenant_id,
+)
+```
+
+### Response Handling
+
+```python
+from FastMiddleware import (
+    # Compression & Caching
+    CompressionMiddleware, CompressionConfig,
+    CacheMiddleware, CacheConfig,
+    ETagMiddleware, ETagConfig,
+    ResponseCacheMiddleware, ResponseCacheConfig,
+    NoCacheMiddleware, NoCacheConfig,
+    ConditionalRequestMiddleware, ConditionalRequestConfig,
+    
+    # Response Formatting
+    ResponseFormatMiddleware, ResponseFormatConfig,
+    DataMaskingMiddleware, DataMaskingConfig, MaskingRule,
+    HATEOASMiddleware, HATEOASConfig, Link,
+    
+    # Performance
+    BandwidthMiddleware, BandwidthConfig,
+    EarlyHintsMiddleware, EarlyHintsConfig, EarlyHint,
+)
+```
+
+### Error Handling
+
+```python
+from FastMiddleware import (
+    ErrorHandlerMiddleware, ErrorConfig,
+    ExceptionHandlerMiddleware, ExceptionHandlerConfig,
+    CircuitBreakerMiddleware, CircuitBreakerConfig, CircuitState,
+)
+```
+
+### Health & Monitoring
+
+```python
+from FastMiddleware import (
+    # Health Checks
+    HealthCheckMiddleware, HealthConfig,
+    
+    # Metrics & Profiling
+    MetricsMiddleware, MetricsConfig, MetricsCollector,
+    ProfilingMiddleware, ProfilingConfig,
+    
+    # Audit & Logging
+    AuditMiddleware, AuditConfig, AuditEvent,
+    RequestLoggerMiddleware, RequestLoggerConfig,
+    
+    # Timing & Performance
+    ServerTimingMiddleware, ServerTimingConfig, timing, add_timing,
+    ResponseTimeMiddleware, ResponseTimeConfig, ResponseTimeSLA,
+    
+    # Cost & Sampling
+    CostTrackingMiddleware, CostTrackingConfig, get_request_cost, add_cost,
+    RequestSamplerMiddleware, RequestSamplerConfig, is_sampled,
+)
+```
+
+### Idempotency
+
+```python
+from FastMiddleware import (
+    IdempotencyMiddleware, IdempotencyConfig, IdempotencyStore, InMemoryIdempotencyStore,
+)
+```
+
+### Maintenance & Lifecycle
+
+```python
+from FastMiddleware import (
+    MaintenanceMiddleware, MaintenanceConfig,
+    WarmupMiddleware, WarmupConfig,
+    GracefulShutdownMiddleware, GracefulShutdownConfig,
+    ChaosMiddleware, ChaosConfig,
+    SlowResponseMiddleware, SlowResponseConfig,
+)
+```
+
+### Request Processing
+
+```python
+from FastMiddleware import (
+    # Limits & Validation
+    TimeoutMiddleware, TimeoutConfig,
+    RequestLimitMiddleware, RequestLimitConfig,
+    PayloadSizeMiddleware, PayloadSizeConfig,
+    ContentTypeMiddleware, ContentTypeConfig,
+    RequestValidatorMiddleware, RequestValidatorConfig, ValidationRule,
+    JSONSchemaMiddleware, JSONSchemaConfig,
+    
+    # URL Processing
+    TrailingSlashMiddleware, TrailingSlashConfig, SlashAction,
+    MethodOverrideMiddleware, MethodOverrideConfig,
+    
+    # Headers & Fingerprinting
+    HeaderTransformMiddleware, HeaderTransformConfig,
+    RequestFingerprintMiddleware, FingerprintConfig, get_fingerprint,
+    RequestPriorityMiddleware, PriorityConfig, Priority,
+)
+```
+
+### URL & Routing
+
+```python
+from FastMiddleware import (
+    RedirectMiddleware, RedirectConfig, RedirectRule,
+    PathRewriteMiddleware, PathRewriteConfig, RewriteRule,
+    ProxyMiddleware, ProxyConfig, ProxyRoute,  # Requires: pip install fastmvc-middleware[proxy]
+)
+```
+
+### API Management
+
+```python
+from FastMiddleware import (
+    VersioningMiddleware, VersioningConfig, VersionLocation, get_api_version,
+    DeprecationMiddleware, DeprecationConfig, DeprecationInfo,
+    RetryAfterMiddleware, RetryAfterConfig,
+    APIVersionHeaderMiddleware, APIVersionHeaderConfig,
+    ContentNegotiationMiddleware, ContentNegotiationConfig, get_negotiated_type,
+)
+```
+
+### Detection & Analytics
+
+```python
+from FastMiddleware import (
+    BotDetectionMiddleware, BotConfig, BotAction,
+    GeoIPMiddleware, GeoIPConfig, get_geo_data,
+    UserAgentMiddleware, UserAgentConfig, UserAgentInfo, get_user_agent,
+    ClientHintsMiddleware, ClientHintsConfig, get_client_hints,
+    RequestFingerprintMiddleware, FingerprintConfig, get_fingerprint,
+)
+```
+
+### Feature Management & Testing
+
+```python
+from FastMiddleware import (
+    FeatureFlagMiddleware, FeatureFlagConfig, get_feature_flags, is_feature_enabled,
+    ABTestMiddleware, ABTestConfig, Experiment, get_variant,
+)
+```
+
+### Localization
+
+```python
+from FastMiddleware import (
+    LocaleMiddleware, LocaleConfig, get_locale,
+    AcceptLanguageMiddleware, AcceptLanguageConfig, get_language,
+)
+```
+
+### Import All (Not Recommended for Production)
+
+```python
+from FastMiddleware import *
+```
+
+---
+
+## 📊 All Middlewares Quick Reference
+
+| Middleware | Purpose | Basic Usage |
+|------------|---------|-------------|
+| **Core** |||
+| `CORSMiddleware` | Cross-origin requests | `app.add_middleware(CORSMiddleware, allow_origins=["*"])` |
+| `LoggingMiddleware` | Request/response logging | `app.add_middleware(LoggingMiddleware)` |
+| `TimingMiddleware` | Add X-Process-Time header | `app.add_middleware(TimingMiddleware)` |
+| `RequestIDMiddleware` | Generate request IDs | `app.add_middleware(RequestIDMiddleware)` |
+| **Security** |||
+| `SecurityHeadersMiddleware` | OWASP security headers | `app.add_middleware(SecurityHeadersMiddleware, enable_hsts=True)` |
+| `CSRFMiddleware` | CSRF protection | `app.add_middleware(CSRFMiddleware, secret_key="...")` |
+| `HTTPSRedirectMiddleware` | HTTP → HTTPS redirect | `app.add_middleware(HTTPSRedirectMiddleware)` |
+| `IPFilterMiddleware` | IP whitelist/blacklist | `app.add_middleware(IPFilterMiddleware, whitelist={"10.0.0.0/8"})` |
+| `TrustedHostMiddleware` | Host header validation | `app.add_middleware(TrustedHostMiddleware, allowed_hosts=["example.com"])` |
+| `OriginMiddleware` | Origin header validation | `app.add_middleware(OriginMiddleware, allowed_origins={"https://..."})` |
+| `WebhookMiddleware` | Webhook signature validation | `app.add_middleware(WebhookMiddleware, secret_key="...")` |
+| `ReferrerPolicyMiddleware` | Referrer-Policy header | `app.add_middleware(ReferrerPolicyMiddleware, policy="strict-origin")` |
+| `PermissionsPolicyMiddleware` | Browser feature control | `app.add_middleware(PermissionsPolicyMiddleware, policies={...})` |
+| `CSPReportMiddleware` | CSP violation reports | `CSPReportMiddleware(app, report_uri="/_csp")` |
+| `HoneypotMiddleware` | Trap malicious requests | `app.add_middleware(HoneypotMiddleware, honeypot_paths={"/wp-admin"})` |
+| `SanitizationMiddleware` | Input sanitization | `app.add_middleware(SanitizationMiddleware, escape_html=True)` |
+| `ReplayPreventionMiddleware` | Prevent replay attacks | `app.add_middleware(ReplayPreventionMiddleware, max_age=300)` |
+| `RequestSigningMiddleware` | HMAC signature validation | `app.add_middleware(RequestSigningMiddleware, secret_key="...")` |
+| `ResponseSignatureMiddleware` | Sign responses | `app.add_middleware(ResponseSignatureMiddleware, secret_key="...")` |
+| **Rate Limiting** |||
+| `RateLimitMiddleware` | Request rate limiting | `app.add_middleware(RateLimitMiddleware, requests_per_minute=100)` |
+| `QuotaMiddleware` | Usage quotas | `app.add_middleware(QuotaMiddleware, quotas={...})` |
+| `LoadSheddingMiddleware` | Shed load under pressure | `app.add_middleware(LoadSheddingMiddleware, max_concurrent=1000)` |
+| `BulkheadMiddleware` | Isolation pattern | `app.add_middleware(BulkheadMiddleware, max_concurrent=100)` |
+| `RequestDedupMiddleware` | Deduplicate requests | `app.add_middleware(RequestDedupMiddleware, window=1.0)` |
+| `RequestCoalescingMiddleware` | Coalesce identical requests | `app.add_middleware(RequestCoalescingMiddleware, window=0.1)` |
+| **Authentication** |||
+| `AuthenticationMiddleware` | JWT/API key auth | `app.add_middleware(AuthenticationMiddleware, backend=JWTAuthBackend(...))` |
+| `BasicAuthMiddleware` | HTTP Basic auth | `app.add_middleware(BasicAuthMiddleware, users={"admin": "pass"})` |
+| `BearerAuthMiddleware` | Bearer token auth | `app.add_middleware(BearerAuthMiddleware, tokens={...})` |
+| `ScopeMiddleware` | OAuth scope validation | `app.add_middleware(ScopeMiddleware, route_scopes={...})` |
+| `RouteAuthMiddleware` | Per-route auth rules | `app.add_middleware(RouteAuthMiddleware, routes=[...])` |
+| **Session & Context** |||
+| `SessionMiddleware` | Server-side sessions | `app.add_middleware(SessionMiddleware, secret_key="...")` |
+| `RequestContextMiddleware` | Async-safe context | `app.add_middleware(RequestContextMiddleware)` |
+| `CorrelationMiddleware` | Correlation IDs | `app.add_middleware(CorrelationMiddleware)` |
+| `TenantMiddleware` | Multi-tenancy | `app.add_middleware(TenantMiddleware, header_name="X-Tenant-ID")` |
+| `ContextMiddleware` | Shared context values | `app.add_middleware(ContextMiddleware)` |
+| `RequestIDPropagationMiddleware` | Propagate request IDs | `app.add_middleware(RequestIDPropagationMiddleware)` |
+| `RealIPMiddleware` | Extract real client IP | `app.add_middleware(RealIPMiddleware)` |
+| `XFFTrustMiddleware` | X-Forwarded-For handling | `app.add_middleware(XFFTrustMiddleware, trusted_proxies=[...])` |
+| **Response Handling** |||
+| `CompressionMiddleware` | GZip compression | `app.add_middleware(CompressionMiddleware, minimum_size=500)` |
+| `CacheMiddleware` | HTTP caching headers | `app.add_middleware(CacheMiddleware, max_age=3600)` |
+| `ETagMiddleware` | ETag generation | `app.add_middleware(ETagMiddleware)` |
+| `ResponseCacheMiddleware` | In-memory caching | `ResponseCacheMiddleware(app, default_ttl=60)` |
+| `ResponseFormatMiddleware` | Standardize responses | `app.add_middleware(ResponseFormatMiddleware, wrap_responses=True)` |
+| `DataMaskingMiddleware` | Mask sensitive data | `app.add_middleware(DataMaskingMiddleware, rules=[...])` |
+| `HATEOASMiddleware` | Hypermedia links | `app.add_middleware(HATEOASMiddleware, link_generators={...})` |
+| `BandwidthMiddleware` | Throttle bandwidth | `app.add_middleware(BandwidthMiddleware, bytes_per_second=512*1024)` |
+| `NoCacheMiddleware` | Disable caching | `app.add_middleware(NoCacheMiddleware, paths={"/api/user"})` |
+| `ConditionalRequestMiddleware` | 304 Not Modified | `app.add_middleware(ConditionalRequestMiddleware)` |
+| `EarlyHintsMiddleware` | HTTP 103 Early Hints | `app.add_middleware(EarlyHintsMiddleware, global_hints=[...])` |
+| **Error Handling** |||
+| `ErrorHandlerMiddleware` | Consistent error format | `app.add_middleware(ErrorHandlerMiddleware)` |
+| `ExceptionHandlerMiddleware` | Custom exception handlers | `ExceptionHandlerMiddleware(app)` |
+| `CircuitBreakerMiddleware` | Circuit breaker pattern | `app.add_middleware(CircuitBreakerMiddleware, failure_threshold=5)` |
+| **Health & Monitoring** |||
+| `HealthCheckMiddleware` | Health/ready/live endpoints | `app.add_middleware(HealthCheckMiddleware, version="1.0.0")` |
+| `MetricsMiddleware` | Prometheus metrics | `app.add_middleware(MetricsMiddleware, endpoint="/metrics")` |
+| `ProfilingMiddleware` | Request profiling | `app.add_middleware(ProfilingMiddleware, threshold_ms=100)` |
+| `AuditMiddleware` | Audit logging | `app.add_middleware(AuditMiddleware)` |
+| `ServerTimingMiddleware` | Server-Timing header | `app.add_middleware(ServerTimingMiddleware)` |
+| `RequestLoggerMiddleware` | Access logging | `app.add_middleware(RequestLoggerMiddleware, format="combined")` |
+| `ResponseTimeMiddleware` | SLA monitoring | `app.add_middleware(ResponseTimeMiddleware, slas=[...])` |
+| `CostTrackingMiddleware` | Request cost tracking | `app.add_middleware(CostTrackingMiddleware, default_cost=1.0)` |
+| `RequestSamplerMiddleware` | Request sampling | `app.add_middleware(RequestSamplerMiddleware, rate=0.1)` |
+| **Idempotency** |||
+| `IdempotencyMiddleware` | Idempotency keys | `app.add_middleware(IdempotencyMiddleware, ttl=3600)` |
+| **Maintenance & Lifecycle** |||
+| `MaintenanceMiddleware` | Maintenance mode | `MaintenanceMiddleware(app, enabled=False)` |
+| `WarmupMiddleware` | Container warmup | `WarmupMiddleware(app, warmup_paths={"/_warmup"})` |
+| `GracefulShutdownMiddleware` | Graceful shutdown | `GracefulShutdownMiddleware(app, timeout=30.0)` |
+| `ChaosMiddleware` | Chaos engineering ⚠️ | `app.add_middleware(ChaosMiddleware, failure_rate=0.1)` |
+| `SlowResponseMiddleware` | Artificial delays ⚠️ | `app.add_middleware(SlowResponseMiddleware, min_delay=1.0)` |
+| **Request Processing** |||
+| `TimeoutMiddleware` | Request timeouts | `app.add_middleware(TimeoutMiddleware, timeout=30.0)` |
+| `RequestLimitMiddleware` | Body size limits | `app.add_middleware(RequestLimitMiddleware, max_size=10*1024*1024)` |
+| `PayloadSizeMiddleware` | Request/response limits | `app.add_middleware(PayloadSizeMiddleware, max_request_size=...)` |
+| `ContentTypeMiddleware` | Content-Type validation | `app.add_middleware(ContentTypeMiddleware, allowed_types=[...])` |
+| `RequestValidatorMiddleware` | Request validation | `app.add_middleware(RequestValidatorMiddleware, rules=[...])` |
+| `JSONSchemaMiddleware` | JSON Schema validation | `app.add_middleware(JSONSchemaMiddleware, schemas={...})` |
+| `TrailingSlashMiddleware` | Trailing slash handling | `app.add_middleware(TrailingSlashMiddleware, action=SlashAction.STRIP)` |
+| `MethodOverrideMiddleware` | HTTP method override | `app.add_middleware(MethodOverrideMiddleware)` |
+| `HeaderTransformMiddleware` | Transform headers | `app.add_middleware(HeaderTransformMiddleware, add_response_headers={...})` |
+| `RequestFingerprintMiddleware` | Request fingerprints | `app.add_middleware(RequestFingerprintMiddleware)` |
+| `RequestPriorityMiddleware` | Request prioritization | `app.add_middleware(RequestPriorityMiddleware, path_priorities={...})` |
+| **Routing** |||
+| `RedirectMiddleware` | URL redirects | `app.add_middleware(RedirectMiddleware, rules=[...])` |
+| `PathRewriteMiddleware` | Path rewriting | `app.add_middleware(PathRewriteMiddleware, rules=[...])` |
+| `ProxyMiddleware` | Reverse proxy 🌐 | `app.add_middleware(ProxyMiddleware, routes=[...])` |
+| **API Management** |||
+| `VersioningMiddleware` | API versioning | `app.add_middleware(VersioningMiddleware, default_version="1.0")` |
+| `DeprecationMiddleware` | Deprecation warnings | `app.add_middleware(DeprecationMiddleware, deprecations=[...])` |
+| `RetryAfterMiddleware` | Retry-After headers | `app.add_middleware(RetryAfterMiddleware)` |
+| `APIVersionHeaderMiddleware` | Version headers | `app.add_middleware(APIVersionHeaderMiddleware, version="2.0")` |
+| `ContentNegotiationMiddleware` | Content negotiation | `app.add_middleware(ContentNegotiationMiddleware, supported_types=[...])` |
+| **Detection & Analytics** |||
+| `BotDetectionMiddleware` | Bot detection | `app.add_middleware(BotDetectionMiddleware, action=BotAction.TAG)` |
+| `UserAgentMiddleware` | Parse User-Agent | `app.add_middleware(UserAgentMiddleware)` |
+| `GeoIPMiddleware` | GeoIP from CDN headers | `app.add_middleware(GeoIPMiddleware)` |
+| `ClientHintsMiddleware` | Client Hints support | `app.add_middleware(ClientHintsMiddleware, request_hints=[...])` |
+| **Feature Management** |||
+| `FeatureFlagMiddleware` | Feature flags | `app.add_middleware(FeatureFlagMiddleware, flags={...})` |
+| `ABTestMiddleware` | A/B testing | `app.add_middleware(ABTestMiddleware, experiments=[...])` |
+| **Localization** |||
+| `LocaleMiddleware` | Locale detection | `app.add_middleware(LocaleMiddleware, supported_locales=[...])` |
+| `AcceptLanguageMiddleware` | Language negotiation | `app.add_middleware(AcceptLanguageMiddleware, supported_languages=[...])` |
+
+---
+
+## 🔧 Helper Functions Reference
+
+| Function | Module | Purpose | Example |
+|----------|--------|---------|---------|
+| `get_request_id()` | RequestContext | Get current request ID | `request_id = get_request_id()` |
+| `get_request_context()` | RequestContext | Get full request context | `ctx = get_request_context()` |
+| `get_correlation_id()` | Correlation | Get correlation ID | `corr_id = get_correlation_id()` |
+| `get_tenant()` | Tenant | Get tenant object | `tenant = get_tenant()` |
+| `get_tenant_id()` | Tenant | Get tenant ID string | `tenant_id = get_tenant_id()` |
+| `get_context()` | Context | Get full context dict | `ctx = get_context()` |
+| `get_context_value(key)` | Context | Get context value | `user_id = get_context_value("user_id")` |
+| `set_context_value(k, v)` | Context | Set context value | `set_context_value("processed", True)` |
+| `get_request_ids()` | RequestIDPropagation | Get request ID chain | `ids = get_request_ids()` |
+| `get_trace_header()` | RequestIDPropagation | Get trace header | `header = get_trace_header()` |
+| `get_real_ip()` | RealIP | Get real client IP | `ip = get_real_ip()` |
+| `get_api_version()` | Versioning | Get API version | `version = get_api_version()` |
+| `get_negotiated_type()` | ContentNegotiation | Get content type | `type = get_negotiated_type()` |
+| `get_geo_data()` | GeoIP | Get geo data dict | `geo = get_geo_data()` |
+| `get_user_agent()` | UserAgent | Get parsed UA | `ua = get_user_agent()` |
+| `get_client_hints()` | ClientHints | Get client hints | `hints = get_client_hints()` |
+| `get_fingerprint()` | RequestFingerprint | Get request fingerprint | `fp = get_fingerprint()` |
+| `get_feature_flags()` | FeatureFlag | Get all flags | `flags = get_feature_flags()` |
+| `is_feature_enabled(name)` | FeatureFlag | Check if enabled | `if is_feature_enabled("dark_mode"):` |
+| `get_variant(name)` | ABTest | Get A/B variant | `variant = get_variant("checkout")` |
+| `get_locale()` | Locale | Get current locale | `locale = get_locale()` |
+| `get_language()` | AcceptLanguage | Get language code | `lang = get_language()` |
+| `timing(name, desc)` | ServerTiming | Time a code block | `with timing("db"): ...` |
+| `add_timing(name, dur)` | ServerTiming | Add timing entry | `add_timing("cache", 5.2)` |
+| `get_request_cost()` | CostTracking | Get total cost | `cost = get_request_cost()` |
+| `add_cost(amount)` | CostTracking | Add to cost | `add_cost(5.0)` |
+| `is_sampled()` | RequestSampler | Check if sampled | `if is_sampled(): log_details()` |
+
+---
+
 ## 📚 Complete Middleware Reference
 
 ### Prerequisites Legend
@@ -968,6 +1378,34 @@ app.add_middleware(
     secret_key="your-secret",
     signature_header="X-Response-Signature",
 )
+```
+
+---
+
+### ResponseFormatMiddleware ✅
+
+Standardize response format (wrap all responses).
+
+```python
+from FastMiddleware import ResponseFormatMiddleware, ResponseFormatConfig
+
+app.add_middleware(
+    ResponseFormatMiddleware,
+    wrap_responses=True,
+    success_key="data",
+    error_key="error",
+    include_metadata=True,
+)
+
+# Responses become:
+# {
+#     "data": { ... },
+#     "metadata": {
+#         "request_id": "...",
+#         "timestamp": "...",
+#         "duration_ms": 12.5
+#     }
+# }
 ```
 
 ---
