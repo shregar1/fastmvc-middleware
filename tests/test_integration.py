@@ -38,7 +38,7 @@ class TestFullMiddlewareStack:
         # Order matters - first added = last executed
         # Add in order: Compression, Timing, Logging, Error, Security, Rate, Context, Health, CORS
 
-        # Compression (outermost)
+        # Add compression as the outermost middleware
         app.add_middleware(CompressionMiddleware, minimum_size=100)
 
         # Timing

@@ -325,7 +325,7 @@ class RateLimitMiddleware(FastMVCMiddleware):
             )
 
         # Check hour rate limit
-        hour_allowed, hour_remaining, hour_reset = await self.store.check_rate_limit(
+        hour_allowed, _hour_remaining, hour_reset = await self.store.check_rate_limit(
             f"{key}:hour",
             self.config.requests_per_hour,
             3600,

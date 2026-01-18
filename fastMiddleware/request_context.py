@@ -18,7 +18,9 @@ from FastMiddleware.base import FastMVCMiddleware
 
 # Context variables for async-safe access to request data
 _request_id_var: ContextVar[str | None] = ContextVar("request_id", default=None)
-_request_context_var: ContextVar[dict[str, Any]] = ContextVar("request_context", default={})
+_request_context_var: ContextVar[dict[str, Any] | None] = ContextVar(
+    "request_context", default=None
+)
 
 
 def get_request_id() -> str | None:
@@ -63,7 +65,11 @@ def get_request_context() -> dict[str, Any]:
             start_time = ctx.get("start_time")
         ```
     """
-    return _request_context_var.get()
+    ctx = _request_context_var.get()
+    if ctx is None:
+        ctx = {}
+        _request_context_var.set(ctx)
+    return ctx
 
 
 class RequestContextMiddleware(FastMVCMiddleware):

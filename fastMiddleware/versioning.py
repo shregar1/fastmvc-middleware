@@ -171,10 +171,7 @@ class VersioningMiddleware(FastMVCMiddleware):
             # Extract version segment
             rest = path[len(prefix) :]
             version_end = rest.find("/")
-            if version_end == -1:
-                version = rest
-            else:
-                version = rest[:version_end]
+            version = rest if version_end == -1 else rest[:version_end]
 
             if version:
                 return f"v{version}" if not version.startswith("v") else version
@@ -186,8 +183,8 @@ class VersioningMiddleware(FastMVCMiddleware):
         accept = request.headers.get("Accept", "")
         # Look for version in accept header: application/vnd.api.v1+json
         if "vnd." in accept:
-            for part in accept.split(";"):
-                part = part.strip()
+            for raw_part in accept.split(";"):
+                part = raw_part.strip()
                 if ".v" in part:
                     # Extract version
                     import re

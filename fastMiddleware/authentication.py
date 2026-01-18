@@ -149,10 +149,10 @@ class JWTAuthBackend(AuthBackend):
         """
         try:
             import jwt
-        except ImportError:
+        except ImportError as err:
             raise ImportError(
                 "pyjwt is required for JWT authentication. Install it with: pip install pyjwt"
-            )
+            ) from err
 
         try:
             options = {"verify_exp": self.verify_exp}

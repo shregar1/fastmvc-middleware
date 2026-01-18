@@ -15,12 +15,12 @@ from starlette.responses import Response
 from FastMiddleware.base import FastMVCMiddleware
 
 
-_context: ContextVar[dict[str, Any]] = ContextVar("request_context", default={})
+_context: ContextVar[dict[str, Any] | None] = ContextVar("request_context", default=None)
 
 
 def get_context() -> dict[str, Any]:
     """Get current request context."""
-    return _context.get()
+    return _context.get() or {}
 
 
 def set_context_value(key: str, value: Any) -> None:

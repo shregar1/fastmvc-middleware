@@ -181,7 +181,7 @@ class ABTestMiddleware(FastMVCMiddleware):
 
         # Select variant based on weights
         cumulative = 0.0
-        for variant, weight in zip(experiment.variants, experiment.weights):
+        for variant, weight in zip(experiment.variants, experiment.weights, strict=False):
             cumulative += weight
             if value < cumulative:
                 return variant

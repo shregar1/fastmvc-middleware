@@ -191,10 +191,7 @@ class CacheMiddleware(FastMVCMiddleware):
 
         # Check for no-store in path rules
         path_rules = self._get_path_rules(request.url.path)
-        if path_rules.get("no_store", self.config.no_store):
-            return False
-
-        return True
+        return not path_rules.get("no_store", self.config.no_store)
 
     async def dispatch(
         self, request: Request, call_next: Callable[[Request], Awaitable[Response]]

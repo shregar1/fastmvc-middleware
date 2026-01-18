@@ -117,20 +117,19 @@ class JSONSchemaMiddleware(FastMVCMiddleware):
             # Validate properties
             for key, value in data.items():
                 if key in properties:
-                    valid, prop_errors = self._validate(value, properties[key])
+                    _valid, prop_errors = self._validate(value, properties[key])
                     errors.extend([f"{key}: {e}" for e in prop_errors])
 
         # Array validation
         if schema_type == "array" and isinstance(data, list):
             items_schema = schema.get("items", {})
             for i, item in enumerate(data):
-                valid, item_errors = self._validate(item, items_schema)
+                _valid, item_errors = self._validate(item, items_schema)
                 errors.extend([f"[{i}]: {e}" for e in item_errors])
 
         # Enum validation
-        if "enum" in schema:
-            if data not in schema["enum"]:
-                errors.append(f"Value must be one of {schema['enum']}")
+        if "enum" in schema and data not in schema["enum"]:
+            errors.append(f"Value must be one of {schema['enum']}")
 
         # Min/max for numbers
         if isinstance(data, (int, float)):

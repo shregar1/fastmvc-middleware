@@ -111,7 +111,7 @@ class BulkheadMiddleware(FastMVCMiddleware):
 
         self._waiting += 1
         try:
-            acquired = await asyncio.wait_for(
+            await asyncio.wait_for(
                 semaphore.acquire(),
                 timeout=self.config.timeout,
             )

@@ -194,7 +194,7 @@ class DataMaskingMiddleware(FastMVCMiddleware):
 
     def _mask_patterns_in_string(self, text: str) -> str:
         """Mask pattern matches in a string."""
-        for name, pattern in self._compiled_patterns.items():
+        for pattern in self._compiled_patterns.values():
             text = pattern.sub(
                 lambda m: self._mask_string(m.group(), self.config.default_show_last),
                 text,

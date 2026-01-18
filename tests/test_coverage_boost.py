@@ -391,11 +391,11 @@ class TestRateLimitCoverage:
         store = InMemoryRateLimitStore()
 
         # Exhaust the limit
-        for i in range(10):
+        for _i in range(10):
             await store.check_rate_limit("test-key", 10, 60)
 
         # Next request should be rate limited
-        allowed, remaining, reset_time = await store.check_rate_limit("test-key", 10, 60)
+        allowed, remaining, _reset_time = await store.check_rate_limit("test-key", 10, 60)
 
         assert allowed is False
         assert remaining == 0
@@ -928,7 +928,7 @@ class TestRateLimitHourly:
         client = TestClient(app)
 
         # Exhaust hourly limit
-        for i in range(5):
+        for _i in range(5):
             response = client.get("/")
             assert response.status_code == 200
 
@@ -1218,7 +1218,7 @@ class TestCacheNoStorePath:
         response = client.get("/cacheable")
 
         # Should have cache control with max-age
-        cache_control = response.headers.get("Cache-Control", "")
+        response.headers.get("Cache-Control", "")
         # Cache may or may not be added depending on response type
         assert response.status_code == 200
 
@@ -1350,7 +1350,7 @@ class TestCacheBuildCacheControl:
         assert response.status_code == 200
 
 
-class TestCompressionEdgeCases:
+class TestCompressionExcludedPaths:
     """More compression edge cases."""
 
     def test_compression_excluded_path(self):

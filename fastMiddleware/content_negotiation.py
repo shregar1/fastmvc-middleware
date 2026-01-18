@@ -89,8 +89,8 @@ class ContentNegotiationMiddleware(FastMVCMiddleware):
             return []
 
         types = []
-        for part in accept.split(","):
-            part = part.strip()
+        for raw_part in accept.split(","):
+            part = raw_part.strip()
             if not part:
                 continue
 

@@ -66,9 +66,7 @@ class FastMVCMiddleware(BaseHTTPMiddleware, ABC):
         """
         if request.url.path in self.exclude_paths:
             return True
-        if request.method in self.exclude_methods:
-            return True
-        return False
+        return request.method in self.exclude_methods
 
     def get_client_ip(self, request: Request) -> str:
         """

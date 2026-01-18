@@ -5,6 +5,7 @@ Handles graceful shutdown with in-flight request draining.
 """
 
 import asyncio
+import contextlib
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 
@@ -84,14 +85,12 @@ class GracefulShutdownMiddleware(FastMVCMiddleware):
         """
         self._shutting_down = True
 
-        # Wait for in-flight requests
-        try:
+        # Wait for in-flight requests, force shutdown after timeout
+        with contextlib.suppress(asyncio.TimeoutError):
             await asyncio.wait_for(
                 self._wait_for_drain(),
                 timeout=self.config.timeout,
             )
-        except asyncio.TimeoutError:
-            pass  # Force shutdown after timeout
 
     async def _wait_for_drain(self) -> None:
         """Wait for all in-flight requests to complete."""

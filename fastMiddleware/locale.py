@@ -138,8 +138,8 @@ class LocaleMiddleware(FastMVCMiddleware):
             return []
 
         locales = []
-        for part in header.split(","):
-            part = part.strip()
+        for raw_part in header.split(","):
+            part = raw_part.strip()
             if not part:
                 continue
 
@@ -168,8 +168,8 @@ class LocaleMiddleware(FastMVCMiddleware):
         """Find best matching supported locale."""
         supported_lower = {loc.lower(): loc for loc in self.config.supported_locales}
 
-        for locale in requested:
-            locale = self._normalize_locale(locale)
+        for raw_locale in requested:
+            locale = self._normalize_locale(raw_locale)
             locale_lower = locale.lower()
 
             # Exact match

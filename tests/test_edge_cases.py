@@ -86,7 +86,7 @@ class TestRateLimitEdgeCases:
         client = TestClient(app)
 
         # Make requests until rate limited
-        for i in range(3):
+        for _i in range(3):
             response = client.get("/")
 
         # At least one should be rate limited or all should pass
@@ -259,7 +259,7 @@ class TestLoggingEdgeCases:
         from FastMiddleware import LoggingMiddleware
 
         async def homepage(request):
-            body = await request.body()
+            await request.body()
             return PlainTextResponse("OK")
 
         app = Starlette(routes=[Route("/", homepage, methods=["POST"])])
@@ -528,7 +528,7 @@ class TestResponseCacheEdgeCases:
             return JSONResponse({"count": counter["value"]})
 
         app = Starlette(routes=[Route("/", homepage)])
-        cache_mw = ResponseCacheMiddleware(app, default_ttl=60)
+        ResponseCacheMiddleware(app, default_ttl=60)
         client = TestClient(app)
 
         resp1 = client.get("/")

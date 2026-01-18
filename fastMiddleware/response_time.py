@@ -134,7 +134,7 @@ class ResponseTimeMiddleware(FastMVCMiddleware):
         duration_ms = (time.perf_counter() - start) * 1000
 
         # Get SLA thresholds
-        target, warning, critical = self._get_sla(request.url.path)
+        _target, warning, critical = self._get_sla(request.url.path)
 
         # Update stats
         self._update_stats(request.url.path, duration_ms)

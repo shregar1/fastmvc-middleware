@@ -204,7 +204,7 @@ def mock_redis():
         async def get(self, key: str) -> str | None:
             return None
 
-        async def set(self, key: str, value: str, ttl: int = None) -> bool:
+        async def set(self, key: str, value: str, ttl: int | None = None) -> bool:
             return True
 
         async def delete(self, key: str) -> bool:
@@ -338,7 +338,7 @@ def assert_security_headers(response, hsts: bool = False):
         assert "Strict-Transport-Security" in response.headers
 
 
-def assert_cors_headers(response, expected_origin: str = None):
+def assert_cors_headers(response, expected_origin: str | None = None):
     """Helper to assert CORS headers are present."""
     assert "Access-Control-Allow-Origin" in response.headers
     if expected_origin:

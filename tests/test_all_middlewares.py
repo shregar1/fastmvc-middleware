@@ -622,7 +622,7 @@ class TestHoneypot:
         app.add_middleware(HoneypotMiddleware, honeypot_paths={"/wp-admin"})
         client = TestClient(app)
 
-        response = client.get("/wp-admin")
+        client.get("/wp-admin")
         # Should return 404 or similar
 
 
@@ -898,7 +898,7 @@ class TestReplayPrevention:
 
         timestamp = str(int(time.time()))
         nonce = "unique-nonce-123"
-        response = client.get("/", headers={"X-Timestamp": timestamp, "X-Nonce": nonce})
+        client.get("/", headers={"X-Timestamp": timestamp, "X-Nonce": nonce})
         # May fail without both headers, which is expected behavior
 
 
@@ -1041,14 +1041,14 @@ class TestRequestSigning:
         secret = "test-secret"
         timestamp = str(int(time.time()))
         message = f"{timestamp}.GET./.".encode()
-        signature = hmac.new(secret.encode(), message, hashlib.sha256).hexdigest()
+        hmac.new(secret.encode(), message, hashlib.sha256).hexdigest()
 
         app = Starlette(routes=[Route("/", homepage)])
         app.add_middleware(RequestSigningMiddleware, secret_key=secret, exclude_paths={"/health"})
         client = TestClient(app)
 
         # Test excluded path
-        response = client.get("/health")
+        client.get("/health")
 
 
 # ============== Request Validator ==============

@@ -81,8 +81,8 @@ class AcceptLanguageMiddleware(FastMVCMiddleware):
             return []
 
         languages = []
-        for part in accept_language.split(","):
-            part = part.strip()
+        for raw_part in accept_language.split(","):
+            part = raw_part.strip()
             if not part:
                 continue
 
@@ -102,7 +102,7 @@ class AcceptLanguageMiddleware(FastMVCMiddleware):
 
     def _negotiate(self, requested: list[tuple[str, float]]) -> str:
         """Negotiate best language match."""
-        supported_lower = [l.lower() for l in self.config.supported_languages]
+        supported_lower = [lang.lower() for lang in self.config.supported_languages]
 
         for lang, _ in requested:
             # Exact match

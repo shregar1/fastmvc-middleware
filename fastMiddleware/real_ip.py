@@ -82,10 +82,7 @@ class RealIPMiddleware(FastMVCMiddleware):
             value = request.headers.get(header)
             if value:
                 # X-Forwarded-For can contain multiple IPs
-                if "," in value:
-                    ip = value.split(",")[0].strip()
-                else:
-                    ip = value.strip()
+                ip = value.split(",")[0].strip() if "," in value else value.strip()
 
                 if ip:
                     return ip

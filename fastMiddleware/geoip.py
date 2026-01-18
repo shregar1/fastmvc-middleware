@@ -156,11 +156,11 @@ class GeoIPMiddleware(FastMVCMiddleware):
             return geo
 
         # Try fallback headers for each field
-        for field, headers in self.config.fallback_headers.items():
+        for field_name, headers in self.config.fallback_headers.items():
             for header in headers:
                 value = request.headers.get(header)
                 if value:
-                    geo[field] = value
+                    geo[field_name] = value
                     break
 
         return geo

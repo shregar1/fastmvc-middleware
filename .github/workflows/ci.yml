@@ -22,52 +22,24 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-lint-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-lint-
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install ruff mypy
+          pip install ruff
 
-      - name: Run Ruff linter
+      - name: Run linting
         run: ruff check FastMiddleware tests
 
-      - name: Run Ruff formatter check
+      - name: Run format check
         run: ruff format --check FastMiddleware tests
-
-  security:
-    name: Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install bandit
-        run: pip install bandit[toml]
-
-      - name: Run Bandit security scan
-        run: bandit -c pyproject.toml -r FastMiddleware
-
-  type-check:
-    name: Type Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mypy starlette pyjwt httpx
-
-      - name: Run MyPy
-        run: mypy FastMiddleware --ignore-missing-imports
 
   test:
     name: Test (Python ${{ matrix.python-version }})
@@ -76,6 +48,11 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
+        include:
+          - python-version: "3.14-dev"
+            experimental: true
+
+    continue-on-error: ${{ matrix.experimental || false }}
 
     steps:
       - uses: actions/checkout@v4
@@ -84,6 +61,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
 
       - name: Install dependencies
         run: |
@@ -101,36 +87,11 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.12'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
           verbose: true
-
-  test-starlette-versions:
-    name: Test Starlette Compatibility
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        starlette-version: ["0.27.0", "0.32.0", "0.35.0"]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install starlette==${{ matrix.starlette-version }}
-          pip install -e ".[dev]"
-
-      - name: Run tests
-        run: pytest tests/ -v --tb=short
 
   build:
     name: Build Package

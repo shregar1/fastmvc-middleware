@@ -156,35 +156,35 @@ class InMemoryIdempotencyStore(IdempotencyStore):
 class IdempotencyMiddleware(FastMVCMiddleware):
     """
     Middleware that provides idempotency support for safe request retries.
-    
+
     Implements the idempotency-key pattern, allowing clients to safely retry
     requests without causing duplicate operations. The middleware caches
     responses and returns the cached response for repeated requests with
     the same idempotency key.
-    
+
     Features:
         - Configurable idempotency header
         - Pluggable storage backends
         - Automatic response caching
         - TTL for cached responses
         - Request fingerprinting
-    
+
     Flow:
         1. Client sends request with Idempotency-Key header
         2. Middleware checks if key exists in cache
         3. If cached: return cached response
         4. If not: process request, cache response, return response
-    
+
     Example:
         ```python
         from fastapi import FastAPI
         from FastMiddleware import IdempotencyMiddleware, IdempotencyConfig
-        
+
         app = FastAPI()
-        
+
         # Basic usage
         app.add_middleware(IdempotencyMiddleware)
-        
+
         # Custom configuration
         config = IdempotencyConfig(
             header_name="X-Idempotency-Key",
@@ -193,14 +193,14 @@ class IdempotencyMiddleware(FastMVCMiddleware):
         )
         app.add_middleware(IdempotencyMiddleware, config=config)
         ```
-    
+
     Client Usage:
         ```bash
         curl -X POST /api/payments \\
           -H "Idempotency-Key: unique-request-id-123" \\
           -d '{"amount": 100}'
         ```
-    
+
     Response Headers:
         - X-Idempotent-Replayed: true (if response was cached)
     """

@@ -137,10 +137,7 @@ class TrailingSlashMiddleware(FastMVCMiddleware):
 
     def _has_file_extension(self, path: str) -> bool:
         """Check if path ends with a file extension."""
-        for ext in self.config.exclude_extensions:
-            if path.endswith(ext):
-                return True
-        return False
+        return any(path.endswith(ext) for ext in self.config.exclude_extensions)
 
     def _normalize_path(self, path: str) -> str | None:
         """Normalize path and return new path if changed."""
@@ -155,9 +152,8 @@ class TrailingSlashMiddleware(FastMVCMiddleware):
         if self.config.action == SlashAction.REMOVE:
             if path.endswith("/"):
                 return path.rstrip("/")
-        elif self.config.action == SlashAction.ADD:
-            if not path.endswith("/"):
-                return path + "/"
+        elif self.config.action == SlashAction.ADD and not path.endswith("/"):
+            return path + "/"
 
         return None
 

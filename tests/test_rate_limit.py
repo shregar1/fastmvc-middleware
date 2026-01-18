@@ -108,7 +108,7 @@ class TestInMemoryRateLimitStore:
         """Test that first request is allowed."""
         store = InMemoryRateLimitStore()
 
-        allowed, remaining, reset = await store.check_rate_limit("test", 10, 60)
+        allowed, remaining, _reset = await store.check_rate_limit("test", 10, 60)
 
         assert allowed is True
         assert remaining == 9
@@ -123,7 +123,7 @@ class TestInMemoryRateLimitStore:
             await store.check_rate_limit("test", 5, 60)
 
         # Next should be blocked
-        allowed, remaining, reset = await store.check_rate_limit("test", 5, 60)
+        allowed, remaining, _reset = await store.check_rate_limit("test", 5, 60)
 
         assert allowed is False
         assert remaining == 0

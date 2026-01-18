@@ -4,6 +4,7 @@ Client Hints Middleware for FastMVC.
 Requests and processes Client Hints for adaptive responses.
 """
 
+import contextlib
 from collections.abc import Awaitable, Callable
 from contextvars import ContextVar
 from dataclasses import dataclass, field
@@ -15,12 +16,12 @@ from starlette.responses import Response
 from FastMiddleware.base import FastMVCMiddleware
 
 
-_hints_ctx: ContextVar[dict[str, Any]] = ContextVar("client_hints", default={})
+_hints_ctx: ContextVar[dict[str, Any] | None] = ContextVar("client_hints", default=None)
 
 
 def get_client_hints() -> dict[str, Any]:
     """Get client hints for current request."""
-    return _hints_ctx.get()
+    return _hints_ctx.get() or {}
 
 
 @dataclass
@@ -95,10 +96,8 @@ class ClientHintsMiddleware(FastMVCMiddleware):
         for header in ["DPR", "Viewport-Width", "Device-Memory"]:
             value = request.headers.get(header)
             if value:
-                try:
+                with contextlib.suppress(ValueError):
                     hints[header.lower().replace("-", "_")] = float(value)
-                except ValueError:
-                    pass
 
         # Parse boolean hints
         save_data = request.headers.get("Save-Data")

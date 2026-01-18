@@ -153,8 +153,8 @@ class FeatureFlagMiddleware(FastMVCMiddleware):
         """Parse feature flag header overrides."""
         overrides = {}
 
-        for pair in header.split(","):
-            pair = pair.strip()
+        for raw_pair in header.split(","):
+            pair = raw_pair.strip()
             if "=" in pair:
                 key, value = pair.split("=", 1)
                 key = key.strip()

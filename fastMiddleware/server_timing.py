@@ -15,7 +15,7 @@ from starlette.responses import Response
 from FastMiddleware.base import FastMVCMiddleware
 
 
-_timings: ContextVar[list[dict]] = ContextVar("server_timings", default=[])
+_timings: ContextVar[list[dict] | None] = ContextVar("server_timings", default=None)
 
 
 def add_timing(name: str, duration: float | None = None, description: str = "") -> None:

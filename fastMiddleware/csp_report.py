@@ -89,10 +89,7 @@ class CSPReportMiddleware(FastMVCMiddleware):
             report = json.loads(body)
 
             # Handle both wrapped and unwrapped format
-            if "csp-report" in report:
-                violation = report["csp-report"]
-            else:
-                violation = report
+            violation = report.get("csp-report", report)
 
             if self.config.log_reports:
                 self._logger.warning(

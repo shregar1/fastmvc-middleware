@@ -15,12 +15,12 @@ from starlette.responses import Response
 from FastMiddleware.base import FastMVCMiddleware
 
 
-_request_ids_ctx: ContextVar[list[str]] = ContextVar("request_ids", default=[])
+_request_ids_ctx: ContextVar[list[str] | None] = ContextVar("request_ids", default=None)
 
 
 def get_request_ids() -> list[str]:
     """Get propagated request IDs."""
-    return _request_ids_ctx.get()
+    return _request_ids_ctx.get() or []
 
 
 def get_trace_header() -> str:
@@ -91,8 +91,8 @@ class RequestIDPropagationMiddleware(FastMVCMiddleware):
             value = request.headers.get(header)
             if value:
                 # Handle comma-separated IDs
-                for id_val in value.split(","):
-                    id_val = id_val.strip()
+                for raw_id_val in value.split(","):
+                    id_val = raw_id_val.strip()
                     if id_val and id_val not in ids:
                         ids.append(id_val)
 

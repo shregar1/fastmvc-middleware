@@ -125,10 +125,7 @@ class HTTPSRedirectMiddleware(FastMVCMiddleware):
 
         # Excluded host
         host = request.url.hostname or ""
-        if host in self.config.exclude_hosts:
-            return False
-
-        return True
+        return host not in self.config.exclude_hosts
 
     async def dispatch(
         self, request: Request, call_next: Callable[[Request], Awaitable[Response]]

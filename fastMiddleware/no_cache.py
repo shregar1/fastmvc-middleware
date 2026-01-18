@@ -74,11 +74,7 @@ class NoCacheMiddleware(FastMVCMiddleware):
         if not self.config.paths:
             return True
 
-        for p in self.config.paths:
-            if path.startswith(p):
-                return True
-
-        return False
+        return any(path.startswith(p) for p in self.config.paths)
 
     async def dispatch(
         self, request: Request, call_next: Callable[[Request], Awaitable[Response]]
