@@ -280,7 +280,7 @@ from fastmiddleware.real_ip import RealIPMiddleware, RealIPConfig, get_real_ip
 from fastmiddleware.xff_trust import XFFTrustMiddleware, XFFTrustConfig
 
 __version__ = "0.6.4"
-__author__ = "Shreyansh Sengar"
+__author__ = "Shivansh Sengar, Shreyansh Sengar"
 __email__ = "sengarsinghshivansh@gmail.com, sengarsinghshreyansh@gmail.com"
 __license__ = "MIT"
 __url__ = "https://github.com/shregar1/fastmvc-middleware"
