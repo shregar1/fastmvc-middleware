@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fastmvc-middleware"
-version = "0.6.1"
+version = "0.6.2"
 description = "Production-ready middleware collection with 90+ components for FastAPI/Starlette applications"
 readme = "README.md"
 license = "MIT"
