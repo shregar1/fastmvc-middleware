@@ -279,7 +279,7 @@ from fastmiddleware.client_hints import (
 from fastmiddleware.real_ip import RealIPMiddleware, RealIPConfig, get_real_ip
 from fastmiddleware.xff_trust import XFFTrustMiddleware, XFFTrustConfig
 
-__version__ = "0.6.1"
+__version__ = "0.6.2"
 __author__ = "Shreyansh Sengar"
 __email__ = "sengarsinghshivansh@gmail.com, sengarsinghshreyansh@gmail.com"
 __license__ = "MIT"
